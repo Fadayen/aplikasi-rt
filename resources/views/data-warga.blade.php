@@ -1,0 +1,256 @@
+@extends('layouts.app')
+
+@section('content')
+
+<style>
+    /* ===== GLOBAL ===== */
+    .card {
+        border-radius: 1.2rem;
+    }
+
+    /* ===== HEADER ===== */
+    .page-header {
+        background: linear-gradient(120deg, #0099cc, #00d4b0);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 1.2rem 1.2rem 0 0;
+    }
+
+    /* ===== SEARCH ===== */
+    .search-box input {
+        border-radius: 30px;
+        padding-left: 20px;
+    }
+
+    /* ===== TABLE ===== */
+    .table thead {
+        background: #f8fafc;
+    }
+
+    .table th {
+        font-weight: 600;
+        color: #555;
+        border-bottom: none;
+    }
+
+    .table td {
+        vertical-align: middle;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f9fefe;
+    }
+
+    /* ===== ACTION BUTTON ===== */
+    .btn-action {
+        border-radius: 20px;
+        font-size: 13px;
+        padding: 4px 14px;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+    .btn-action:hover {
+        transform: translateY(-1px);
+    }
+
+    /* ===== TAGIHAN BUTTON ===== */
+    .btn-tagihan {
+        background: linear-gradient(90deg, #00c6ff, #00ff9d);
+        color: white;
+    }
+    .btn-tagihan:hover {
+        opacity: .9;
+    }
+
+    /* ===== TABLE CONTAINER ===== */
+    .table-wrapper {
+        border: 1px solid #eaecef;
+        border-radius: 12px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+        .page-header h5 {
+            font-size: 16px;
+        }
+
+        .btn-action {
+            font-size: 12px;
+            padding: 4px 10px;
+        }
+
+        .btn-tagihan {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        /* Wrapper untuk scroll horizontal tabel */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-box input {
+            width: 100%;
+        }
+
+        .search-box button {
+            width: 100%;
+        }
+
+        /* Membuat header lebih kecil */
+        .page-header {
+            padding: 12px 18px;
+        }
+        .page-header h5 {
+            font-size: 15px;
+        }
+
+        /* Tombol aksi jadi rapat */
+        .btn-action {
+            margin-bottom: 4px;
+            width: 100%;
+        }
+
+        .table th,
+        .table td {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .table td .d-flex {
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        td.text-center {
+            min-width: 130px;
+        }
+    }
+
+    @media (max-width: 576px) {
+
+        .container {
+            padding: 12px;
+        }
+
+        .btn-action {
+            font-size: 11px;
+            padding: 4px 8px;
+        }
+
+        .page-header h5 {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="container">
+
+    <div class="card shadow-sm border-0">
+
+        {{-- HEADER --}}
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="bi bi-people-fill me-2"></i> Daftar Warga
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            {{-- FILTER --}}
+            <form method="GET" class="search-box d-flex gap-2 mb-4">
+                <input type="text" name="search" class="form-control"
+                    placeholder="🔍 Cari nama / NIK / No KK"
+                    value="{{ request('search') }}">
+
+                <button class="btn btn-primary px-4 rounded-pill fw-semibold">
+                    Filter
+                </button>
+            </form>
+
+            {{-- TABLE --}}
+            <div class="table-wrapper">
+                <div class="table-responsive">
+
+                    <table class="table mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jenis Kelamin</th>
+                                <th class="text-center" style="width:230px;">Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @forelse($warga as $w)
+                            <tr>
+                                <td class="fw-semibold">{{ $w->name }}</td>
+                                <td>
+                                    <span class="badge bg-secondary-subtle text-dark rounded-pill px-3">
+                                        {{ $w->jenis_kelamin }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+
+                                    <div class="d-flex justify-content-center gap-1 flex-wrap">
+
+                                        <a href="{{ url('/data-warga/'.$w->id) }}"
+                                           class="btn btn-info btn-sm btn-action text-white">
+                                            Detail
+                                        </a>
+
+                                        @if(auth()->user()->role == 'admin')
+
+                                            <a href="{{ url('/data-warga/'.$w->id.'/edit') }}"
+                                               class="btn btn-warning btn-sm btn-action text-white">
+                                                Edit
+                                            </a>
+
+                                            <form action="{{ url('/data-warga/'.$w->id) }}" method="POST"
+                                                  onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm btn-action">
+                                                    Hapus
+                                                </button>
+                                            </form>
+
+                                            <a href="{{ route('tagihan.create', $w->id) }}"
+                                               class="btn btn-sm btn-action btn-tagihan">
+                                                + Tagihan
+                                            </a>
+
+                                        @endif
+                                    </div>
+
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    Data warga belum tersedia
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@endsection
