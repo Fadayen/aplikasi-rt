@@ -164,6 +164,7 @@
                             <th>Nominal</th>
                             <th>Jatuh Tempo</th>
                             <th class="text-center">Status</th>
+                            <th>Catatan</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -190,7 +191,6 @@
 
                                 {{-- STATUS --}}
 <td class="text-center">
-
     @if($t->payment)
 
         @if($t->payment->status === 'rejected')
@@ -206,10 +206,26 @@
     @else
         <span class="badge badge-belum">Belum Bayar</span>
     @endif
-
 </td>
 
-
+<td>
+    @if($t->payment && $t->payment->status === 'rejected' && $t->payment->catatan)
+        <small
+            class="text-danger fst-italic"
+            style="
+                display:block;
+                max-width:220px;
+                white-space:normal;
+                word-break:break-word;
+            "
+            title="{{ $t->payment->catatan }}"
+        >
+            “{{ $t->payment->catatan }}”
+        </small>
+    @else
+        <span class="text-muted">-</span>
+    @endif
+</td>
                                 {{-- AKSI --}}
 <td class="text-center">
 

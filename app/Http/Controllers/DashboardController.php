@@ -10,32 +10,48 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index()
-    {
-        // total warga (role warga)
-        $totalWarga = User::where('role', 'warga')->count();
+{
+    // total warga
+    $totalWarga = User::where('role', 'warga')->count();
 
-        // agenda bulan ini
-        $agendaBulanIni = Agenda::whereMonth('tanggal', now()->month)
-                                ->whereYear('tanggal', now()->year)
-                                ->count();
+    // agenda bulan ini
+    $agendaBulanIni = Agenda::whereMonth('tanggal', now()->month)
+        ->whereYear('tanggal', now()->year)
+        ->count();
 
-        // tagihan tertunggak (default per user)
+    // ============================
+    // TAGIHAN TERTUNGGAK
+    // ============================
+
+    if (Auth::user()->role === 'admin') {
+
+        // ADMIN: semua tagihan yang belum lunas / ditolak
+        $tagihanTertunggak = Tagihan::where(function ($q) {
+            $q->whereDoesntHave('payment')
+              ->orWhereHas('payment', function ($p) {
+                  $p->where('status', 'rejected');
+              });
+        })->count();
+
+    } else {
+
+        // WARGA: hanya tagihan milik sendiri
         $tagihanTertunggak = Tagihan::where('user_id', auth()->id())
-                            ->where('status', 'belum_lunas')
-                            ->count();
-
-
-        // jika admin, lihat semua tagihan
-        if (Auth::user()->role === 'admin') {
-            $tagihanTertunggak = Tagihan::where('status', 'belum')->count();
-        }
-
-        return view('dashboard', compact(
-            'totalWarga',
-            'agendaBulanIni',
-            'tagihanTertunggak'
-        ));
+            ->where(function ($q) {
+                $q->whereDoesntHave('payment')
+                  ->orWhereHas('payment', function ($p) {
+                      $p->where('status', 'rejected');
+                  });
+            })->count();
     }
+
+    return view('dashboard', compact(
+        'totalWarga',
+        'agendaBulanIni',
+        'tagihanTertunggak'
+    ));
+}
+
 
     public function warga()
     {
