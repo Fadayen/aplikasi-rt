@@ -10,12 +10,14 @@ class AdminSeeder extends Seeder
 {
     public function run()
     {
-        User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'),
-            'role' => 'admin',       // ← penting
-            'approved' => 1,         // jika pakai kolom approved
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'], // KEY unik
+            [
+                'name'     => 'Administrator',
+                'password' => Hash::make('admin123'),
+                'role'     => 'admin',
+                'approved' => 1,
+            ]
+        );
     }
 }
