@@ -30,6 +30,9 @@ Route::middleware('web')->group(function () {
         Route::post('/{id}/komentar', [BeritaController::class, 'komentar'])->name('berita.komentar');
     });
 
+    // AGENDA (warga bisa lihat)
+    Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
+    
     Route::get('/berita-detik', [DetikNewsController::class, 'index']);
 
     /*
@@ -97,8 +100,6 @@ Route::middleware('web')->group(function () {
      ->name('surat.download');
         });
 
-        // AGENDA (warga bisa lihat)
-        Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
 
         // KEUANGAN (read only)
         Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
@@ -228,12 +229,14 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
             Route::post('/store', [TagihanController::class, 'store'])->name('tagihan.store');
             Route::post('/admin/payment/verify/{id}', [DashboardControllerAdmin::class, 'verify'])
     ->name('payment.verify');
-
 Route::post('/admin/payment/reject/{id}', [DashboardControllerAdmin::class, 'reject'])
     ->name('payment.reject');
     Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])
     ->name('tagihan.destroy');
-
+                Route::post('/kirim-massal', [TagihanController::class, 'kirimMassal'])
+    ->name('tagihan.massal');
+Route::post('/kirim-perwarga', [TagihanController::class, 'kirimPerWarga'])
+        ->name('tagihan.kirim.perwarga');
 
 });
 

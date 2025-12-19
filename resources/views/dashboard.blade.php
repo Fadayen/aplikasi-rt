@@ -302,7 +302,7 @@ body {
     <div class="welcome-avatar">
         <i class="fas fa-user" style="font-size: 40px; color: white; line-height: 80px;"></i>
     </div>
-    <h3 class="welcome-title">Selamat Datang, Warga RT 02!</h3>
+    <h3 class="welcome-title">Selamat Datang, Warga RT 04!</h3>
     <p style="color: #666; margin-bottom: 20px;">Kelola data dan kegiatan Anda dengan mudah.</p>
     <div class="welcome-stats">
         <div class="stat-item">
@@ -324,37 +324,17 @@ body {
     <div class="row g-4">
 
         <!-- CARD 1 -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card-menu">
                 <div class="feature-icon"><i class="fas fa-users"></i></div>
                 <h5 class="card-title">DATA WARGA</h5>
-                <p class="card-desc">Informasi lengkap data warga RT 02 secara real-time.</p>
+                <p class="card-desc">Informasi lengkap data warga RT 04 secara real-time.</p>
                 <a href="{{ url('data-warga') }}" class="tampil-btn"><button>👁 Tampil</button></a>
             </div>
         </div>
 
-        <!-- CARD 2 -->
-        <div class="col-md-4">
-            <div class="card-menu">
-                <div class="feature-icon"><i class="fas fa-envelope-open-text"></i></div>
-                <h5 class="card-title">SURAT PENGANTAR</h5>
-                <p class="card-desc">Ajukan surat online tanpa harus datang ke pengurus.</p>
-                <a href="/surat" class="tampil-btn"><button>👁 Tampil</button></a>
-            </div>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="col-md-4">
-            <div class="card-menu">
-                <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
-                <h5 class="card-title">AGENDA</h5>
-                <p class="card-desc">Jadwal kegiatan & acara lingkungan RT 02.</p>
-                <a href="/agenda" class="tampil-btn"><button>👁 Tampil</button></a>
-            </div>
-        </div>
-
         <!-- CARD 4 -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card-menu">
                 <div class="feature-icon"><i class="fas fa-receipt"></i></div>
                 <h5 class="card-title">TAGIHAN</h5>
@@ -364,7 +344,7 @@ body {
         </div>
 
         <!-- CARD 5 -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card-menu">
                 <div class="feature-icon"><i class="fas fa-wallet"></i></div>
                 <h5 class="card-title">KEUANGAN</h5>
@@ -374,7 +354,7 @@ body {
         </div>
 
         <!-- CARD 6 -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card-menu">
                 <div class="feature-icon"><i class="fas fa-box"></i></div>
                 <h5 class="card-title">INVENTARIS</h5>

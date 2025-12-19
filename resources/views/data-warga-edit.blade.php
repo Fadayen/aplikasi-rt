@@ -31,7 +31,6 @@
                            value="{{ $warga->name }}" required>
                 </div>
 
-
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Nomor KK</label>
                     <input type="text" name="no_kk" class="form-control" 
@@ -63,6 +62,22 @@
                     <input type="text" name="no_hp" class="form-control" 
                            value="{{ $warga->no_hp }}" required>
                 </div>
+
+                <div class="col-md-6 mb-3">
+    <label class="form-label fw-semibold">Kategori Rumah</label>
+    <select name="jenis_tagihan" class="form-control" required>
+        <option value="">-- Pilih Kategori --</option>
+        <option value="biasa" {{ $warga->jenis_tagihan == 'biasa' ? 'selected' : '' }}>
+            Biasa (Rp 50.000)
+        </option>
+        <option value="vip" {{ $warga->jenis_tagihan == 'vip' ? 'selected' : '' }}>
+            VIP (Rp 100.000)
+        </option>
+    </select>
+</div>
+
+
+
 
             </div>
 

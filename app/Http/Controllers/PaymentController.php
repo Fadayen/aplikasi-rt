@@ -11,19 +11,35 @@ class PaymentController extends Controller
     // ===============================
     // WARGA - LIHAT DAFTAR TAGIHAN
     // ===============================
-    public function index()
-    {
-        if (auth()->user()->role === 'admin') {
-            $tagihan = Tagihan::with(['user', 'payment'])->latest()->get();
-        } else {
-            $tagihan = Tagihan::with('payment')
-                ->where('user_id', auth()->id())
-                ->latest()
-                ->get();
-        }
+    public function index(Request $request)
+{
 
-        return view('payment.tagihan', compact('tagihan'));
+    $search = $request->search;
+
+    if (auth()->user()->role === 'admin') {
+
+        $search = $request->search;
+
+        $tagihan = Tagihan::with(['user', 'payment'])
+            ->when($search, function ($q) use ($search) {
+                $q->whereHas('user', function ($u) use ($search) {
+                    $u->where('name', 'like', '%' . $search . '%');
+                });
+            })
+            ->latest()
+            ->get();
+
+    } else {
+
+        $tagihan = Tagihan::with('payment')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
     }
+
+    return view('payment.tagihan', compact('tagihan', 'search'));
+}
+
 
     // ===============================
     // WARGA - FORM BAYAR

@@ -7,11 +7,26 @@ use App\Models\Keuangan;
 
 class KeuanganController extends Controller
 {
-    public function index()
-    {
-        $data = Keuangan::latest()->get();
-        return view('keuangan.index', compact('data'));
+    public function index(Request $request)
+{
+    $bulan = $request->bulan;
+    $tahun = $request->tahun;
+
+    $query = Keuangan::query();
+
+    if ($bulan) {
+        $query->whereMonth('tanggal', $bulan);
     }
+
+    if ($tahun) {
+        $query->whereYear('tanggal', $tahun);
+    }
+
+    $data = $query->orderBy('tanggal', 'desc')->get();
+
+    return view('keuangan.index', compact('data', 'bulan', 'tahun'));
+}
+
 
     public function create()
     {

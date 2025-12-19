@@ -50,11 +50,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control">
-                </div>
-
-                <div class="mb-3">
                     <label class="form-label fw-semibold">Gambar</label>
                     <input type="file" name="gambar" class="form-control">
                 </div>

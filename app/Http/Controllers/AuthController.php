@@ -80,6 +80,7 @@ class AuthController extends Controller
             'no_kk'          => $r->no_kk,
             'nik'            => $r->nik,
             'alamat'         => $r->alamat,
+            'master_tagihan_id' => $r->master_tagihan_id,
             'no_hp'          => $r->no_hp,
             'tempat_lahir'   => $r->tempat_lahir,
             'tanggal_lahir'  => $r->tanggal_lahir,

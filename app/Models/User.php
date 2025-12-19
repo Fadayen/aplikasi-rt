@@ -23,6 +23,7 @@ class User extends Authenticatable
         'tanggal_lahir',
         'agama',
         'jenis_kelamin',
+        'jenis_tagihan',
         'role',
         'approved',
     ];
@@ -39,6 +40,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function masterTagihan()
+{
+    return $this->belongsTo(MasterTagihan::class, 'master_tagihan_id');
+}
+
+public function getNominalTagihanAttribute()
+{
+    if (!$this->masterTagihan) return 0;
+
+    return $this->tipe_rumah === 'vip'
+        ? $this->masterTagihan->nominal_vip
+        : $this->masterTagihan->nominal_biasa;
+}
+
+
 
 }
 

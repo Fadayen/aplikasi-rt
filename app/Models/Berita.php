@@ -11,7 +11,6 @@ class Berita extends Model
         'isi',
         'headline',
         'sumber',
-        'tanggal',
         'penulis',
         'gambar'
     ];

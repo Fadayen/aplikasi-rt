@@ -123,6 +123,80 @@
         margin-top: 6px;
     }
 }
+
+/* =========================
+   SEARCH BAR ADMIN
+========================= */
+.search-wrapper {
+    background: #fff;
+    padding: 14px 18px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.06);
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-input-group {
+    position: relative;
+    flex: 1;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #6b7280;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border-radius: 30px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.search-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+
+.btn-filter {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-filter:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 576px) {
+    .search-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-filter {
+        width: 100%;
+    }
+}
+
 </style>
 
 
@@ -141,13 +215,39 @@
         </div>
     @endif
 
-
+    
+    
+    
     {{-- CARD --}}
     <div class="card tagihan-card">
         <div class="card-header card-header-gradient d-flex align-items-center">
             <i class="bi bi-receipt-cutoff me-2 fs-5"></i>
             Daftar Tagihan Warga
         </div>
+        {{-- SEARCH BAR ADMIN --}}
+        @if(auth()->user()->role === 'admin')
+        <div class="search-wrapper mb-4">
+            <form method="GET" action="{{ route('tagihan.index') }}" class="search-form">
+        
+                <div class="search-input-group">
+                    <span class="search-icon">🔍</span>
+        
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        class="search-input"
+                        placeholder="Cari nama warga"
+                    />
+                </div>
+        
+                <button type="submit" class="btn-filter">
+                    Search
+                </button>
+        
+            </form>
+        </div>
+        @endif
 
         <div class="card-body p-0">
 

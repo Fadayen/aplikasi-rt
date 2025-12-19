@@ -11,16 +11,21 @@
     <style>
         /* FONT GLOBAL */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            margin: 0;
-        }
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
 
         /* NAVBAR PREMIUM DENGAN GRADIEN DAN ANIMASI */
         .navbar-custom {
             background: linear-gradient(135deg, #ffffff 0%, #e6f7ff 100%);
-            padding: 20px 40px;
+            padding: 8px 14px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
@@ -169,7 +174,7 @@
             color: white;
             text-align: center;
             padding: 20px;
-            margin-top: 50px;
+            margin-top: 170px;
             border-radius: 20px 20px 0 0;
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
         }
@@ -218,41 +223,49 @@
             <!-- MENU TENGAH -->
             <ul class="navbar-nav mx-auto">
 
-                @if (auth()->check() && auth()->user()->role == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard/admin">
-                            <i class="fas fa-cog"></i> ADMIN
-                        </a>
-                    </li>
-                @endif
+    @if (auth()->check() && auth()->user()->role == 'admin')
+        <li class="nav-item">
+            <a class="nav-link" href="/dashboard/admin">
+                <i class="fas fa-cog"></i> ADMIN
+            </a>
+        </li>
+    @endif
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/agenda">
-                        <i class="fas fa-calendar-alt"></i> AGENDA
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/berita">
-                        <i class="fas fa-newspaper"></i> BERITA
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/keuangan">
-                        <i class="fas fa-dollar-sign"></i> KEUANGAN
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/inventaris">
-                        <i class="fas fa-boxes"></i> INVENTARIS
-                    </a>
-                </li>
-                <li class="nav-item me-2">
-    <a class="nav-link text-primary" href="{{ url('/berita-detik') }}">
-        <i class="fas fa-globe"></i> Berita Nasional
-    </a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="/agenda">
+            <i class="fas fa-calendar-alt"></i> AGENDA
+        </a>
+    </li>
 
-            </ul>
+    <li class="nav-item">
+        <a class="nav-link" href="/berita">
+            <i class="fas fa-newspaper"></i> BERITA
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/keuangan">
+            <i class="fas fa-dollar-sign"></i> KEUANGAN
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/inventaris">
+            <i class="fas fa-boxes"></i> INVENTARIS
+        </a>
+    </li>
+
+    {{-- Berita Nasional HANYA saat login --}}
+    @auth
+    <li class="nav-item">
+        <a class="nav-link text-primary" href="{{ url('/berita-detik') }}">
+            <i class="fas fa-globe"></i> Berita Nasional
+        </a>
+    </li>
+    @endauth
+
+</ul>
+
 
             <!-- USER DROPDOWN -->
             <ul class="navbar-nav">
@@ -276,12 +289,7 @@
                 </li>
 
                 @else
-                    {{-- TOMBOL BERITA NASIONAL --}}
-<li class="nav-item me-2">
-    <a class="nav-link text-primary" href="{{ url('/berita-detik') }}">
-        <i class="fas fa-globe"></i> Berita Nasional
-    </a>
-</li>
+                    
 
 {{-- LOGIN --}}
 <li class="nav-item">
@@ -304,7 +312,7 @@
 
 <!-- FOOTER -->
 <footer>
-    <p>&copy; 2025 Aplikasi RT 02. Dibuat dengan ❤️ untuk masyarakat.</p>
+    <p>&copy; 2025 Aplikasi RT 04. Dibuat dengan ❤️ untuk masyarakat.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
