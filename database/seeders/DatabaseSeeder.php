@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
 
         // Tambahkan ini:
         $this->call(AdminSeeder::class);
+        $this->call([
+        MasterTagihanSeeder::class,
+    ]);
     }
 }
