@@ -52,10 +52,11 @@ class DashboardController extends Controller
     ));
 }
 
-
     public function warga()
     {
         // dashboard khusus warga (kalau mau beda view nanti)
         return $this->index();
     }
+
+    
 }
