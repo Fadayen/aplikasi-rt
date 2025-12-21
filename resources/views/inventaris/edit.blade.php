@@ -40,19 +40,27 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Tanggal Masuk</label>
+                    <label>Tanggal</label>
                     <input type="date" name="tanggal_masuk" class="form-control" 
                            value="{{ $item->tanggal_masuk }}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label>Kondisi</label>
-                    <select name="kondisi" class="form-control" required>
-                        <option value="baru" {{ $item->kondisi == 'baru' ? 'selected' : '' }}>Baru</option>
-                        <option value="baik" {{ $item->kondisi == 'baik' ? 'selected' : '' }}>Baik</option>
-                        <option value="rusak" {{ $item->kondisi == 'rusak' ? 'selected' : '' }}>Rusak</option>
-                    </select>
-                </div>
+    <label>Kondisi</label>
+    <select name="kondisi" id="kondisi" class="form-control" required>
+        <option value="baru" {{ $item->kondisi == 'baru' ? 'selected' : '' }}>Baru</option>
+        <option value="baik" {{ $item->kondisi == 'baik' ? 'selected' : '' }}>Baik</option>
+        <option value="rusak" {{ $item->kondisi == 'rusak' ? 'selected' : '' }}>Rusak</option>
+        <option value="dipinjam" {{ $item->kondisi == 'dipinjam' ? 'selected' : '' }}>Dipinjam</option>
+    </select>
+</div>
+<div class="mb-3" id="keteranganPinjam"
+     style="{{ $item->kondisi == 'dipinjam' ? '' : 'display:none;' }}">
+    <label>Keterangan</label>
+    <textarea name="keterangan" class="form-control"
+        placeholder="Dipinjam oleh siapa, tanggal pinjam, dll">{{ $item->keterangan }}</textarea>
+</div>
+
 
                 <button class="btn btn-primary">Simpan Perubahan</button>
                 <a href="/inventaris" class="btn btn-secondary">Kembali</a>

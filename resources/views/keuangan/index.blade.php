@@ -129,11 +129,12 @@
     <div class="col-md-4 col-6">
         <select name="tahun" class="form-select">
             <option value="">-- Pilih Tahun --</option>
-            @for($t = now()->year; $t >= 2020; $t--)
-                <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>
-                    {{ $t }}
-                </option>
-            @endfor
+            @for($t = 2035; $t >= 2020; $t--)
+    <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>
+        {{ $t }}
+    </option>
+@endfor
+
         </select>
     </div>
 

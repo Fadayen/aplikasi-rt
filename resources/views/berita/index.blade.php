@@ -156,7 +156,6 @@
 <div class="container mt-4">
 
     {{-- TOMBOL TAMBAH BERITA --}}
-    @if(auth()->check() && auth()->user()->role === 'admin')
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('berita.create') }}" 
        class="btn btn-primary"
@@ -164,9 +163,6 @@
         + Tambah Berita
     </a>
 </div>
-@endif
-
-
 
     {{-- HIGHLIGHT --}}
     @if(count($data) > 0)

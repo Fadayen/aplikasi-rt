@@ -23,14 +23,15 @@
                 <label class="mt-3">Lokasi</label>
                 <input type="text" name="lokasi" class="form-control">
 
-                <label class="mt-3">Tanggal Masuk</label>
+                <label class="mt-3">Tanggal</label>
                 <input type="date" name="tanggal_masuk" class="form-control">
 
                 <label class="mt-3">Kondisi</label>
-                <select name="kondisi" class="form-control">
-                    <option value="baru">Baru</option>
-                    <option value="baik">Baik</option>
-                    <option value="rusak">Rusak</option>
+                <select name="kondisi" id="kondisi" class="form-control">
+                <option value="baru">Baru</option>
+                <option value="baik">Baik</option>
+                <option value="rusak">Rusak</option>
+                <option value="dipinjam">Dipinjam</option>
                 </select>
 
                 <label class="mt-3">Keterangan (opsional)</label>

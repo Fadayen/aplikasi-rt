@@ -97,7 +97,8 @@
                                 <th>Nama</th>
                                 <th>Jumlah</th>
                                 <th>Lokasi</th>
-                                <th>Tanggal Beli</th>
+                                <th>Tanggal</th>
+                                <th>Kondisi</th>
                                 <th>Keterangan</th>
                                 <th style="width: 160px;">Action</th>
                             </tr>
@@ -111,6 +112,20 @@
                                 <td class="text-center">{{ $item->jumlah }}</td>
                                 <td class="text-center">{{ $item->lokasi ?? '-' }}</td>
                                 <td class="text-center">{{ $item->tanggal_masuk }}</td>
+                                <td class="text-center">
+                                @if($item->kondisi == 'baru')
+                                <span class="badge bg-primary">Baru</span>
+                                @elseif($item->kondisi == 'baik')
+                                <span class="badge bg-success">Baik</span>
+                                @elseif($item->kondisi == 'rusak')
+                                <span class="badge bg-danger">Rusak</span>
+                                @elseif($item->kondisi == 'dipinjam')
+                                <span class="badge bg-warning text-dark">Dipinjam</span>
+                                @else
+                                <span class="badge bg-secondary">-</span>
+                                @endif
+                                </td>
+
                                 <td>{{ $item->keterangan ?? '-' }}</td>
 
                                 <td class="text-center">

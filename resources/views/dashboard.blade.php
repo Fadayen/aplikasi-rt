@@ -4,12 +4,10 @@
 
 <style>
 /* GLOBAL */
-body {
-    background: linear-gradient(140deg, #eef2f5, #dfe9f3);
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-    position: relative;
+html, body {
+    overflow-x: hidden !important;
 }
+
 
 /* PARTICLE BACKGROUND */
 .particles {
@@ -285,6 +283,13 @@ body {
         font-size: 28px;
     }
 }
+
+.dashboard-wrapper {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+
 </style>
 
 <div class="particles">
@@ -320,7 +325,7 @@ body {
     </div>
 </div>
 
-<div class="container">
+<div class="dashboard-wrapper">
     <div class="row g-4">
 
         <!-- CARD 1 -->

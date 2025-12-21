@@ -151,7 +151,7 @@
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     padding: 30px;
-    margin-top: 30px;
+    margin-top: 0;
     /* backdrop-filter: blur(10px); */  <-- HAPUS
     animation: fadeInUp 0.5s ease;
 }
@@ -170,14 +170,19 @@
 
         /* FOOTER */
         footer {
-            background: linear-gradient(135deg, #0099cc 0%, #005f85 100%);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 170px;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-        }
+    background: linear-gradient(135deg, #0099cc 0%, #005f85 100%);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+
+    /* FIX PENTING */
+    margin-top: auto;   /* dorong footer ke bawah */
+    width: 100%;
+}
+
+
 
         footer p {
             margin: 0;
@@ -197,18 +202,28 @@
                 margin-top: 20px;
             }
         }
+
+        .main-content {
+    flex: 1;
+    padding-top: 0;
+}
+
+
     </style>
 </head>
 
-<body class="bg-light">
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
 
         <!-- BRAND DENGAN IKON -->
+        
         <a class="navbar-brand fw-bold" href="/dashboard">
-            <i class="fas fa-home"></i> 
-        </a>
+    APLIKASI RT
+</a>
+
+
 
         <!-- MOBILE BUTTON -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -221,36 +236,44 @@
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <!-- MENU TENGAH -->
-            <ul class="navbar-nav mx-auto">
+<ul class="navbar-nav mx-auto">
+
+    {{-- DASHBOARD --}}
+    <li class="nav-item">
+    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">
+        <i class="fas fa-home"></i> DASHBOARD
+    </a>
+</li>
+
 
     @if (auth()->check() && auth()->user()->role == 'admin')
         <li class="nav-item">
-            <a class="nav-link" href="/dashboard/admin">
+            <a class="nav-link {{ request()->is('dashboard/admin') ? 'active' : '' }}" href="/dashboard/admin">
                 <i class="fas fa-cog"></i> ADMIN
             </a>
         </li>
     @endif
 
     <li class="nav-item">
-        <a class="nav-link" href="/agenda">
+        <a class="nav-link {{ request()->is('agenda') ? 'active' : '' }}" href="/agenda">
             <i class="fas fa-calendar-alt"></i> AGENDA
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/berita">
+        <a class="nav-link {{ request()->is('berita') ? 'active' : '' }}" href="/berita">
             <i class="fas fa-newspaper"></i> BERITA
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/keuangan">
+        <a class="nav-link {{ request()->is('keuangan') ? 'active' : '' }}" href="/keuangan">
             <i class="fas fa-dollar-sign"></i> KEUANGAN
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/inventaris">
+        <a class="nav-link {{ request()->is('inventaris') ? 'active' : '' }}" href="/inventaris">
             <i class="fas fa-boxes"></i> INVENTARIS
         </a>
     </li>
@@ -258,13 +281,15 @@
     {{-- Berita Nasional HANYA saat login --}}
     @auth
     <li class="nav-item">
-        <a class="nav-link text-primary" href="{{ url('/berita-detik') }}">
+        <a class="nav-link {{ request()->is('berita-detik') ? 'active' : '' }} text-primary"
+           href="{{ url('/berita-detik') }}">
             <i class="fas fa-globe"></i> Berita Nasional
         </a>
     </li>
     @endauth
 
 </ul>
+
 
 
             <!-- USER DROPDOWN -->
@@ -306,13 +331,16 @@
     </div>
 </nav>
 
-<div class="container mt-4">
-    @yield('content')
-</div>
+<main class="main-content">
+    <div class="container">
+        @yield('content')
+    </div>
+</main>
+
 
 <!-- FOOTER -->
 <footer>
-    <p>&copy; 2025 Aplikasi RT 04. Dibuat dengan ❤️ untuk masyarakat.</p>
+    <p>&copy; 2025 Kelompok 6 Universitas Bhayangkara. Dibuat dengan ❤️ untuk masyarakat.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

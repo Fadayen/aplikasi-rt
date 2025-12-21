@@ -95,10 +95,10 @@
                 {{-- Email --}}
                 <div class="mb-3">
                     <input 
-                        type="email" 
-                        name="email" 
-                        class="form-control" 
-                        placeholder="Email"
+                        type="text"
+                        name="login"
+                        class="form-control"
+                        placeholder="Nama atau Email"
                         required
                     >
                 </div>

@@ -40,16 +40,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Headline</label>
-                    <input type="text" name="headline" class="form-control">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Sumber / Penulis</label>
-                    <input type="text" name="penulis" class="form-control">
-                </div>
-
-                <div class="mb-3">
                     <label class="form-label fw-semibold">Gambar</label>
                     <input type="file" name="gambar" class="form-control">
                 </div>

@@ -28,8 +28,9 @@ class DashboardControllerAdmin extends Controller
         'agenda' => Agenda::latest()->get(),
 
         // keuangan
-        'totalMasuk'  => Keuangan::where('jenis', 'masuk')->sum('jumlah'),
-        'totalKeluar' => Keuangan::where('jenis', 'keluar')->sum('jumlah'),
+        'totalMasuk'  => Keuangan::where('jenis', 'pemasukan')->sum('jumlah'),
+        'totalKeluar' => Keuangan::where('jenis', 'pengeluaran')->sum('jumlah'),
+
 
         // inventaris
         'inventaris' => Inventaris::all(),

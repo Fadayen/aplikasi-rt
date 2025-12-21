@@ -28,7 +28,6 @@ class BeritaController extends Controller
         $r->validate([
             'judul'   => 'required',
             'isi'     => 'required',
-            'penulis' => 'required',
             'gambar'  => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -41,7 +40,7 @@ class BeritaController extends Controller
         Berita::create([
             'judul'   => $r->judul,
             'isi'     => $r->isi,
-            'penulis' => $r->penulis,
+            'penulis' => auth()->user()->name,
             'tanggal' => Carbon::now()->toDateString(), // 🔥 TANGGAL OTOMATIS
             'gambar'  => $gambar,
         ]);

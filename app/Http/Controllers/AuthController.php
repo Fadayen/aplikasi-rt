@@ -15,37 +15,48 @@ class AuthController extends Controller
     }
 
     public function loginProcess(Request $r)
-    {
-        $credentials = $r->only('email', 'password');
+{
+    $r->validate([
+        'login'    => 'required',
+        'password' => 'required',
+    ]);
 
-        if (Auth::attempt($credentials)) {
+    $loginInput = $r->login;
+    $password   = $r->password;
 
-            $r->session()->regenerate();
-            $user = Auth::user();
+    // Tentukan field login: email atau name
+    $field = filter_var($loginInput, FILTER_VALIDATE_EMAIL)
+        ? 'email'
+        : 'name';
 
-            // LOGIN ADMIN
-            if ($user->role === 'admin') {
-                return redirect()->route('dashboard.admin');
-            }
+    if (Auth::attempt([$field => $loginInput, 'password' => $password])) {
 
-            // LOGIN WARGA
-            if ($user->role === 'warga') {
+        $r->session()->regenerate();
+        $user = Auth::user();
 
-                if ($user->approved != 1) {
-                    Auth::logout();
-                    return back()->with('error', 'Akun anda belum di-approve oleh admin.');
-                }
-
-                return redirect()->route('dashboard.warga');
-            }
-
-            // ROLE UNKNOWN
-            Auth::logout();
-            return redirect('/login')->with('error', 'Role tidak dikenali.');
+        // LOGIN ADMIN
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard.admin');
         }
 
-        return back()->with('error', 'Email atau password salah.');
+        // LOGIN WARGA
+        if ($user->role === 'warga') {
+
+            if ($user->approved != 1) {
+                Auth::logout();
+                return back()->with('error', 'Akun anda belum di-approve oleh admin.');
+            }
+
+            return redirect()->route('dashboard.warga');
+        }
+
+        Auth::logout();
+        return back()->with('error', 'Role tidak dikenali.');
     }
+
+    return back()->with('error', 'Nama / Email atau password salah.');
+}
+
 
     public function register()
     {
