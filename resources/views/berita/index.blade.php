@@ -155,14 +155,18 @@
 
 <div class="container mt-4">
 
-    {{-- TOMBOL TAMBAH BERITA --}}
-<div class="d-flex justify-content-end mb-4">
-    <a href="{{ route('berita.create') }}" 
-       class="btn btn-primary"
-       style="font-weight:600; border-radius:10px;">
-        + Tambah Berita
-    </a>
-</div>
+    {{-- TOMBOL TAMBAH BERITA (ADMIN ONLY) --}}
+@auth
+    @if(auth()->user()->role === 'admin')
+        <div class="d-flex justify-content-end mb-4">
+            <a href="{{ route('berita.create') }}" 
+               class="btn btn-primary"
+               style="font-weight:600; border-radius:10px;">
+                + Tambah Berita
+            </a>
+        </div>
+    @endif
+@endauth
 
     {{-- HIGHLIGHT --}}
     @if(count($data) > 0)
