@@ -5,171 +5,423 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Warga</title>
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Fonts untuk font yang lebih menarik -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            background: #e9eef4;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* =========================
+   GLOBAL BODY (SCROLL AMAN)
+   ========================= */
+body {
+    font-family: 'Poppins', sans-serif;
 
-        .frame {
-            background: white;
-            width: 900px;
-            height: 580px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 40px;
-            position: relative;
-        }
+    background-image:
+        linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.15)),
+        url("{{ asset('assets/img/bg-login.jpg') }}");
 
-        .inner-box {
-            background: #f6f7f9;
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            padding: 40px 60px;
-            overflow-y: auto;
-        }
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 
-        .form-title {
-            text-align: center;
-            font-size: 25px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    min-height: 100vh;          /* FIX SCROLL */
+    margin: 0;
 
-        .form-control {
-            height: 42px;
-        }
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;    /* PENTING */
+    padding: 40px 15px;
 
-        /* Eye icon di tengah dan di kanan */
-        .eye-icon {
-            position: absolute;
-            top: 50%;
-            right: 15px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            user-select: none;
-            font-size: 18px;
-            color: #666;
-        }
+    position: relative;
+    overflow-x: hidden;
+}
 
-        .eye-icon:hover {
-            color: #000;
-        }
-    </style>
+/* =========================
+   PARTIKEL BACKGROUND (AMAN)
+   ========================= */
+body::after {
+    content: '';
+    position: fixed;            /* FIXED BIAR GAK IKUT SCROLL */
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(74,144,226,.1), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(53,122,189,.1), transparent 50%);
+    animation: floatParticles 25s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes floatParticles {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+/* =========================
+   FRAME (KONTROL TINGGI)
+   ========================= */
+.frame {
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   INNER CONTAINER
+   ========================= */
+.inner-box {
+    padding: 20px;
+}
+
+/* =========================
+   REGISTER CARD (PROPORSIONAL)
+   ========================= */
+.register-card {
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-radius: 22px;
+    padding: 30px;
+
+    box-shadow: 0 25px 70px rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.35);
+
+    animation: fadeUp .8s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   FORM TITLE
+   ========================= */
+.form-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* =========================
+   FORM INPUT
+   ========================= */
+.form-control,
+.form-select {
+    border-radius: 12px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,.85);
+    border: 1px solid #ddd;
+    transition: .3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74,144,226,.25);
+}
+
+/* =========================
+   ICON INPUT
+   ========================= */
+.input-group {
+    position: relative;
+}
+
+.input-group .form-control,
+.input-group .form-select {
+    padding-left: 45px;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4a90e2;
+    z-index: 5;
+}
+
+/* =========================
+   EYE ICON
+   ========================= */
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    transition: .3s;
+}
+
+.eye-icon:hover {
+    color: #4a90e2;
+}
+
+/* =========================
+   BUTTON
+   ========================= */
+.btn-primary {
+    background: linear-gradient(135deg,#4a90e2,#357abd);
+    border: none;
+    border-radius: 30px;
+    padding: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    transition: .3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(74,144,226,.5);
+}
+
+/* =========================
+   ALERT
+   ========================= */
+.alert {
+    border-radius: 12px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .register-card {
+        padding: 25px;
+    }
+
+    .form-title {
+        font-size: 22px;
+    }
+}
+
+/* FIX ALIGN TEXTAREA DENGAN ICON */
+textarea.form-control {
+    padding-top: 12px;      /* biar teks sejajar */
+    padding-left: 45px;     /* samakan dengan input */
+    line-height: 1.5;
+    resize: none;           /* opsional: biar rapi */
+}
+
+/* =========================
+   LOGIN LINK
+   ========================= */
+.login-link {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.login-link a {
+    color: #4a90e2;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 4px;
+    position: relative;
+    transition: .3s;
+}
+
+.login-link a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg,#4a90e2,#357abd);
+    transition: .3s;
+}
+
+.login-link a:hover {
+    color: #357abd;
+}
+
+.login-link a:hover::after {
+    width: 100%;
+}
+
+
+</style>
+
+
 </head>
 
 <body>
 
 <div class="frame">
     <div class="inner-box">
+        <div class="register-card">
+            <h2 class="form-title">Register Warga</h2>
 
-        <h2 class="form-title">Register Warga</h2>
+            {{-- Pesan Error / Sukses --}}
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
 
-        <form action="/register" method="POST">
-            @csrf
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
-            <div class="row g-3">
+            <form action="{{ route('register.warga.process') }}" method="POST">
 
-                <div class="col-md-6">
-                    <label>Username</label>
-                    <input type="text" class="form-control" name="username" placeholder="Username">
-                </div>
+                @csrf
 
-                <div class="col-md-6">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="email" placeholder="Email">
-                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <div class="input-group">
+                            <i class="bi bi-person input-icon"></i>
+                            <input type="text" class="form-control" name="username" placeholder="Username" required>
+                        </div>
+                    </div>
 
-                <!-- Password -->
-                <div class="col-md-6">
-                    <label>Password</label>
-                    <div class="position-relative">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                        <i class="bi bi-eye-fill eye-icon" onclick="togglePassword('password', this)"></i>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <div class="input-group">
+                            <i class="bi bi-envelope input-icon"></i>
+                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="col-md-6">
+                        <label class="form-label">Password</label>
+                        <div class="position-relative">
+                            <div class="input-group">
+                                <i class="bi bi-lock input-icon"></i>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <i class="bi bi-eye-fill eye-icon" onclick="togglePassword('password', this)"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Konfirmasi -->
+                    <div class="col-md-6">
+                        <label class="form-label">Password Konfirmasi</label>
+                        <div class="position-relative">
+                            <div class="input-group">
+                                <i class="bi bi-lock-fill input-icon"></i>
+                                <input type="password" class="form-control" id="password2" name="password_confirmation" placeholder="Password Konfirmasi" required>
+                                <i class="bi bi-eye-fill eye-icon" onclick="togglePassword('password2', this)"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Nomor Kartu Keluarga</label>
+                        <div class="input-group">
+                            <i class="bi bi-card-text input-icon"></i>
+                            <input type="text" class="form-control" name="no_kk" placeholder="Nomor Kartu Keluarga" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">NIK</label>
+                        <div class="input-group">
+                            <i class="bi bi-person-vcard input-icon"></i>
+                            <input type="text" class="form-control" name="nik" placeholder="NIK" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Nama Lengkap</label>
+                        <div class="input-group">
+                            <i class="bi bi-person-circle input-icon"></i>
+                            <input type="text" class="form-control" name="nama_lengkap" placeholder="Nama Lengkap" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Tempat Lahir</label>
+                        <div class="input-group">
+                            <i class="bi bi-geo-alt input-icon"></i>
+                            <input type="text" class="form-control" name="tempat_lahir" placeholder="Tempat Lahir" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Tanggal Lahir</label>
+                        <div class="input-group">
+                            <i class="bi bi-calendar-date input-icon"></i>
+                            <input type="date" class="form-control" name="tanggal_lahir" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Agama</label>
+                        <div class="input-group">
+                            <i class="bi bi-star input-icon"></i>
+                            <select class="form-select" name="agama" required>
+                                <option value="">-- Pilih Agama --</option>
+                                <option>Islam</option>
+                                <option>Kristen</option>
+                                <option>Katolik</option>
+                                <option>Hindu</option>
+                                <option>Buddha</option>
+                                <option>Konghucu</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Jenis Kelamin</label>
+                        <div class="input-group">
+                            <i class="bi bi-gender-ambiguous input-icon"></i>
+                            <select class="form-select" name="jenis_kelamin" required>
+                                <option value="">-- Pilih --</option>
+                                <option>Laki-laki</option>
+                                <option>Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Nomor HP</label>
+                        <div class="input-group">
+                            <i class="bi bi-phone input-icon"></i>
+                            <input type="text" class="form-control" name="no_hp" placeholder="Nomor HP" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Alamat Lengkap</label>
+                        <div class="input-group">
+                            <i class="bi bi-house-door input-icon"></i>
+                            <textarea class="form-control" name="alamat" rows="3" placeholder="Alamat Lengkap" required></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Password Konfirmasi -->
-                <div class="col-md-6">
-                    <label>Password Konfirmasi</label>
-                    <div class="position-relative">
-                        <input type="password" class="form-control" id="password2" name="password_confirmation" placeholder="Password Konfirmasi">
-                        <i class="bi bi-eye-fill eye-icon" onclick="togglePassword('password2', this)"></i>
-                    </div>
-                </div>
+                <button class="btn btn-primary w-100 mt-4">
+                    <i class="bi bi-person-plus me-2"></i>Register
+                </button>
 
-                <div class="col-md-6">
-                    <label>Nomor Kartu Keluarga</label>
-                    <input type="text" class="form-control" name="no_kk" placeholder="Nomor Kartu Keluarga">
-                </div>
+                <div class="login-link">
+    <i class="bi bi-box-arrow-in-right me-1"></i>
+    Sudah punya akun?
+    <a href="{{ route('login') }}">Login di sini</a>
+</div>
 
-                <div class="col-md-6">
-                    <label>NIK</label>
-                    <input type="text" class="form-control" name="nik" placeholder="NIK">
-                </div>
 
-                <div class="col-md-12">
-                    <label>Nama Lengkap</label>
-                    <input type="text" class="form-control" name="nama_lengkap" placeholder="Nama Lengkap">
-                </div>
-
-                <div class="col-md-6">
-                    <label>Tempat Lahir</label>
-                    <input type="text" class="form-control" name="tempat_lahir" placeholder="Tempat Lahir">
-                </div>
-
-                <div class="col-md-6">
-                    <label>Tanggal Lahir</label>
-                    <input type="date" class="form-control" name="tanggal_lahir">
-                </div>
-
-                <div class="col-md-6">
-                    <label>Agama</label>
-                    <select class="form-control" name="agama">
-                        <option value="">-- Pilih Agama --</option>
-                        <option>Islam</option>
-                        <option>Kristen</option>
-                        <option>Katolik</option>
-                        <option>Hindu</option>
-                        <option>Buddha</option>
-                        <option>Konghucu</option>
-                    </select>
-                </div>
-
-                <div class="col-md-6">
-                    <label>Jenis Kelamin</label>
-                    <select class="form-control" name="jenis_kelamin">
-                        <option value="">-- Pilih --</option>
-                        <option>Laki-laki</option>
-                        <option>Perempuan</option>
-                    </select>
-                </div>
-
-                <div class="col-md-6">
-                    <label>Nomor HP</label>
-                    <input type="text" class="form-control" name="no_hp" placeholder="Nomor HP">
-                </div>
-
-                <div class="col-md-12">
-                    <label>Alamat Lengkap</label>
-                    <textarea class="form-control" name="alamat" rows="2" placeholder="Alamat Lengkap"></textarea>
-                </div>
-
-            </div>
-
-            <button class="btn btn-primary w-100 mt-4">Register</button>
-
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 

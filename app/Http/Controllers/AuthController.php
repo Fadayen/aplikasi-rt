@@ -27,7 +27,7 @@ class AuthController extends Controller
     // Tentukan field login: email atau name
     $field = filter_var($loginInput, FILTER_VALIDATE_EMAIL)
         ? 'email'
-        : 'name';
+        : 'username';
 
     if (Auth::attempt([$field => $loginInput, 'password' => $password])) {
 
