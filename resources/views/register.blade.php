@@ -213,11 +213,13 @@ body::after {
 
 /* FIX ALIGN TEXTAREA DENGAN ICON */
 textarea.form-control {
-    padding-top: 12px;      /* biar teks sejajar */
-    padding-left: 45px;     /* samakan dengan input */
+    height: 48px;          /* sama dengan input biasa */
+    padding-top: 12px;     /* sejajar text */
+    padding-left: 45px;    /* sejajar icon */
     line-height: 1.5;
-    resize: none;           /* opsional: biar rapi */
+    resize: none;
 }
+
 
 /* =========================
    LOGIN LINK
