@@ -246,7 +246,7 @@
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Master Tagihan</label>
                 <select name="master_id" class="form-select rounded-pill" required>
-                    <option value="">Pilih Master Tagihan</option>
+                    <option value="">Pilih Tagihan</option>
                     @foreach($masters as $m)
                         <option value="{{ $m->id }}">
                             {{ $m->nama_tagihan }}

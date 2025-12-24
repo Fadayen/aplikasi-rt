@@ -10,15 +10,15 @@ class MasterTagihanSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('master_tagihans')->insert([
+        DB::table('master_tagihans')->updateOrInsert(
+            ['nama_tagihan' => 'Kas Bulanan'], // kunci unik
             [
-                'nama_tagihan'   => 'Kas Bulanan',
-                'nominal_biasa'  => 50000,
-                'nominal_vip'    => 100000,
-                'aktif'          => 1,
-                'created_at'     => Carbon::now(),
-                'updated_at'     => Carbon::now(),
-            ],
-        ]);
+                'nominal_biasa' => 50000,
+                'nominal_vip'   => 100000,
+                'aktif'         => 1,
+                'updated_at'    => Carbon::now(),
+                'created_at'    => Carbon::now(),
+            ]
+        );
     }
 }
