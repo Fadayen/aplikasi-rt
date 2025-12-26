@@ -68,6 +68,8 @@ class Kernel extends HttpKernel
     // ✅ CUSTOM MIDDLEWARE
     'approved' => \App\Http\Middleware\ApprovedOnly::class,
     'admin'    => \App\Http\Middleware\AdminOnly::class,
+    'force.password' => \App\Http\Middleware\ForcePasswordChange::class,
+
 ];
 
 

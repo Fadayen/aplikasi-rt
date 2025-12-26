@@ -13,6 +13,8 @@ use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\DetikNewsController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 
 
 
@@ -122,6 +124,14 @@ Route::get('/payment/{id}', [PaymentController::class, 'create'])
 Route::post('/payment/{id}', [PaymentController::class, 'upload'])
     ->name('payment.upload');
 
+     // form ganti password
+    Route::get('/change-password', [ChangePasswordController::class, 'show'])
+        ->name('password.change');
+
+    // submit password baru
+    Route::post('/change-password', [ChangePasswordController::class, 'update'])
+        ->name('password.change.submit');
+
 
 });
 
@@ -132,6 +142,12 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
         |--------------------------------------------------------------------------
         */
         Route::middleware('admin')->group(function () {
+
+            // 🔐 RESET PASSWORD WARGA (ADMIN ONLY)
+    Route::post(
+        '/admin/reset-password/{user}',
+        [\App\Http\Controllers\Admin\UserController::class, 'resetPassword']
+    )->name('admin.reset-password');
 
             // APPROVE USER
             Route::post('/admin/users/{id}/approve', [DashboardControllerAdmin::class, 'approve'])

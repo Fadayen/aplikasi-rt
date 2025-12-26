@@ -332,9 +332,32 @@
 
 <main class="main-content">
     <div class="container">
+
+        {{-- ✅ FLASH SUCCESS --}}
+        @if (session('success'))
+    <div id="flash-success"
+         class="alert alert-success alert-dismissible fade show mt-3"
+         role="alert">
+        <i class="fa-solid fa-circle-check me-1"></i>
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+
+        {{-- ❌ FLASH ERROR (OPSIONAL) --}}
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                <i class="fa-solid fa-circle-xmark me-1"></i>
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
         @yield('content')
     </div>
 </main>
+
 
 
 <!-- FOOTER -->
@@ -343,6 +366,20 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const alert = document.getElementById('flash-success');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+
+                setTimeout(() => alert.remove(), 500);
+            }, 3000); // ⏱ 3 detik
+        }
+    });
+</script>
 
 </body>
 </html>

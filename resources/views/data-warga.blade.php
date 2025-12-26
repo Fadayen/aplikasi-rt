@@ -187,28 +187,6 @@
 
 </style>
 
-@if(session('success'))
-<div id="successAlert"
-     class="alert alert-success alert-dismissible fade show shadow-sm rounded-3"
-     role="alert">
-    <i class="bi bi-check-circle-fill me-2"></i>
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-
-<script>
-    setTimeout(() => {
-        const alert = document.getElementById('successAlert');
-        if (alert) {
-            alert.classList.remove('show');
-            setTimeout(() => alert.remove(), 300);
-        }
-    }, 3000);
-</script>
-@endif
-
-
-
 <div class="container">
 
     <div class="card shadow-sm border-0">

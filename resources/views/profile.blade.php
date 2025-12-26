@@ -112,6 +112,21 @@
                 </tr>
             </table>
 
+                {{-- 🚨 BUTTON GANTI PASSWORD (JIKA PASSWORD SEMENTARA) --}}
+@if(Auth::user()->role === 'warga' && Auth::user()->force_password_change)
+    <div class="alert alert-warning mt-4 d-flex justify-content-between align-items-center">
+        <div>
+            <strong>⚠️ Keamanan Akun</strong><br>
+            Anda masih menggunakan password sementara.  
+            Silakan ganti password untuk keamanan akun.
+        </div>
+
+        <a href="{{ route('password.change') }}" class="btn btn-warning fw-bold">
+            Ganti Password
+        </a>
+    </div>
+@endif
+
         </div>
     </div>
 

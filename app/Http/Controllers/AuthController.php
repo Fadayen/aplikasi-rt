@@ -40,15 +40,18 @@ class AuthController extends Controller
         }
 
         // LOGIN WARGA
-        if ($user->role === 'warga') {
+if ($user->role === 'warga') {
 
-            if ($user->approved != 1) {
-                Auth::logout();
-                return back()->with('error', 'Akun anda belum di-approve oleh admin.');
-            }
+    if ($user->approved != 1) {
+        Auth::logout();
+        return back()->with('error', 'Akun anda belum di-approve oleh admin.');
+    }
 
-            return redirect()->route('dashboard.warga');
-        }
+
+    return redirect()->route('dashboard');
+
+}
+
 
         Auth::logout();
         return back()->with('error', 'Role tidak dikenali.');
@@ -111,4 +114,26 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    public function changePasswordForm()
+{
+    return view('auth.change-password');
+}
+
+public function changePassword(Request $request)
+{
+    $request->validate([
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    Auth::user()->update([
+        'password' => Hash::make($request->password),
+        'force_password_change' => 0,
+    ]);
+
+    return redirect()->route('dashboard')
+    ->with('success', 'Password berhasil diperbarui.');
+
+}
+
 }

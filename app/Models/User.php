@@ -26,6 +26,7 @@ class User extends Authenticatable
         'jenis_tagihan',
         'role',
         'approved',
+        'force_password_change',
     ];
 
     protected $hidden = [

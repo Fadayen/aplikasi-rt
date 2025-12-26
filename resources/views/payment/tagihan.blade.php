@@ -203,21 +203,7 @@
 
 
 <div class="container mt-4">
-
-    {{-- ALERT SUKSES --}}
-    @if(session('success'))
-        <div id="alert" class="success-alert">
-            <div class="icon">✅</div>
-            <div class="text">
-                <strong>Berhasil!</strong>
-                <div>{{ session('success') }}</div>
-            </div>
-        </div>
-    @endif
-
-    
-    
-    
+        
     {{-- CARD --}}
     <div class="card tagihan-card">
         <div class="card-header card-header-gradient d-flex align-items-center">
