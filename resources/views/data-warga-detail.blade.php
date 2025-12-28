@@ -88,7 +88,11 @@
 </div>
 
 {{-- ✅ MODAL RESET PASSWORD --}}
-@if(auth()->user()->role === 'admin')
+@if(
+    auth()->check() &&
+    auth()->user()->role === 'admin' &&
+    Route::has('admin.reset-password')
+)
 <div class="modal fade" id="resetPasswordModal" tabindex="-1">
   <div class="modal-dialog">
     <form method="POST" action="{{ route('admin.reset-password', $warga->id) }}">
@@ -132,5 +136,6 @@
   </div>
 </div>
 @endif
+
 
 @endsection
