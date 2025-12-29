@@ -211,60 +211,105 @@
                 </button>
             </form>
 
+            @if(auth()->user()->role === 'admin')
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+        <h6 class="fw-bold mb-3">
+            Setting Nominal Kas Bulanan
+        </h6>
+
+        <form action="{{ route('setting-tagihan.update') }}" method="POST" class="row g-3">
+            @csrf
+            <input type="hidden" name="id" value="{{ $kasBulanan->id }}">
+
+            <div class="col-md-4">
+                <label class="form-label">Nominal Biasa</label>
+                <input type="number"
+                       name="nominal_biasa"
+                       class="form-control rounded-pill"
+                       value="{{ $kasBulanan->nominal_biasa }}"
+                       required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Nominal VIP</label>
+                <input type="number"
+                       name="nominal_vip"
+                       class="form-control rounded-pill"
+                       value="{{ $kasBulanan->nominal_vip }}"
+                       required>
+            </div>
+
+            <div class="col-md-4 d-grid align-items-end">
+                <button class="btn btn-primary rounded-pill fw-semibold">
+                    Simpan Perubahan
+                </button>
+            </div>
+        </form>
+
+        <div class="alert alert-info mt-3 small mb-0">
+            ℹ️ Perubahan nominal langsung berlaku untuk seluruh tagihan & warga.
+        </div>
+    </div>
+</div>
+@endif
+
+
             {{-- TAGIHAN MASSAL (ADMIN) --}}
 @if(auth()->user()->role == 'admin')
 <div class="card tagihan-massal-card mb-4 border-0">
     <div class="card-body">
 
         <form action="{{ route('tagihan.massal') }}" method="POST"
-              class="row g-3 align-items-end">
-            @csrf
+      class="row g-3 align-items-end">
+    @csrf
 
-            {{-- MASTER TAGIHAN --}}
-            <div class="col-md-4">
-                <label class="form-label fw-semibold">Master Tagihan</label>
-                <select name="master_id" class="form-select rounded-pill" required>
-                    <option value="">Pilih Tagihan</option>
-                    @foreach($masters as $m)
-                        <option value="{{ $m->id }}">
-                            {{ $m->nama_tagihan }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+    {{-- MASTER TAGIHAN AUTO --}}
+    <input type="hidden" name="master_id" value="{{ $kasBulanan->id ?? '' }}">
 
-            {{-- TARGET --}}
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Target Warga</label>
-                <select name="jenis_tagihan" class="form-select rounded-pill" required>
-                    <option value="all">Semua Warga</option>
-                    <option value="biasa">Biasa (Rp 50.000)</option>
-                    <option value="vip">VIP (Rp 100.000)</option>
-                </select>
-            </div>
+    <div class="col-md-4">
+        <label class="form-label fw-semibold">Pilih Tagihan</label>
+        <input type="text"
+               class="form-control rounded-pill"
+               value="Kas Bulanan"
+               disabled>
+    </div>
 
-            {{-- JATUH TEMPO --}}
-            <div class="col-md-3">
-                <label class="form-label fw-semibold">Jatuh Tempo</label>
-                <input type="date"
-                       name="jatuh_tempo"
-                       class="form-control rounded-pill"
-                       required>
-            </div>
+    {{-- TARGET --}}
+    <div class="col-md-3">
+        <label class="form-label fw-semibold">Target Warga</label>
+        <select name="jenis_tagihan" class="form-select rounded-pill" required>
+            <option value="all">Semua Warga</option>
+            <option value="biasa">
+    Biasa (Rp {{ number_format($kasBulanan->nominal_biasa,0,',','.') }})
+</option>
+<option value="vip">
+    VIP (Rp {{ number_format($kasBulanan->nominal_vip,0,',','.') }})
+</option>
 
-            {{-- BUTTON --}}
-            <div class="col-md-2 d-grid">
-                <button type="submit"
-    class="btn btn-success rounded-pill fw-semibold"
-    onclick="return konfirmasiKirim(event, this)">
-    <span class="text">Kirim</span>
-    <span class="spinner-border spinner-border-sm d-none"></span>
-</button>
+        </select>
+    </div>
 
+    {{-- JATUH TEMPO --}}
+    <div class="col-md-3">
+        <label class="form-label fw-semibold">Jatuh Tempo</label>
+        <input type="date"
+               name="jatuh_tempo"
+               class="form-control rounded-pill"
+               required>
+    </div>
 
-            </div>
+    {{-- BUTTON --}}
+    <div class="col-md-2 d-grid">
+        <button type="submit"
+            class="btn btn-success rounded-pill fw-semibold"
+            onclick="return konfirmasiKirim(event, this)">
+            <span class="text">Kirim</span>
+            <span class="spinner-border spinner-border-sm d-none"></span>
+        </button>
+    </div>
+</form>
 
-        </form>
     </div>
 </div>
 @endif
@@ -303,12 +348,17 @@
     @if(auth()->user()->role === 'admin')
 <td>
     @if($w->jenis_tagihan === 'vip')
-        <span class="badge bg-warning text-dark">VIP (Rp 100.000)</span>
-    @elseif($w->jenis_tagihan === 'biasa')
-        <span class="badge bg-info text-dark">Biasa (Rp 50.000)</span>
-    @else
-        <span class="badge bg-secondary">Belum ditentukan</span>
-    @endif
+    <span class="badge bg-warning text-dark">
+        VIP (Rp {{ number_format($kasBulanan->nominal_vip, 0, ',', '.') }})
+    </span>
+@elseif($w->jenis_tagihan === 'biasa')
+    <span class="badge bg-info text-dark">
+        Biasa (Rp {{ number_format($kasBulanan->nominal_biasa, 0, ',', '.') }})
+    </span>
+@else
+    <span class="badge bg-secondary">Belum ditentukan</span>
+@endif
+
 </td>
 @endif
 

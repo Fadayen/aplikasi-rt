@@ -116,34 +116,33 @@
         <form method="GET" action="{{ url('/keuangan') }}" class="row g-3 mb-4">
 
     <div class="col-md-4 col-6">
-        <select name="bulan" class="form-select">
-            <option value="">-- Pilih Bulan --</option>
-            @foreach(range(1,12) as $b)
-                <option value="{{ $b }}" {{ request('bulan') == $b ? 'selected' : '' }}>
-                    {{ \Carbon\Carbon::create()->month($b)->translatedFormat('F') }}
-                </option>
-            @endforeach
-        </select>
+        <label class="form-label fw-semibold">Tanggal Awal</label>
+        <input type="date"
+               name="start_date"
+               class="form-control"
+               value="{{ request('start_date') }}">
     </div>
 
     <div class="col-md-4 col-6">
-        <select name="tahun" class="form-select">
-            <option value="">-- Pilih Tahun --</option>
-            @for($t = 2035; $t >= 2020; $t--)
-    <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>
-        {{ $t }}
-    </option>
-@endfor
-
-        </select>
+        <label class="form-label fw-semibold">Tanggal Akhir</label>
+        <input type="date"
+               name="end_date"
+               class="form-control"
+               value="{{ request('end_date') }}">
     </div>
 
-    <div class="col-md-4 col-12 d-flex gap-2">
-        <button class="btn btn-primary w-100">🔍 Filter</button>
-        <a href="{{ url('/keuangan') }}" class="btn btn-secondary w-100">♻ Reset</a>
+    <div class="col-md-4 col-12 d-flex gap-2 align-items-end">
+        <button class="btn btn-primary w-100">
+            🔍 Filter
+        </button>
+
+        <a href="{{ url('/keuangan') }}" class="btn btn-secondary w-100">
+            ♻ Reset
+        </a>
     </div>
 
 </form>
+
 
 
         <div class="table-responsive">

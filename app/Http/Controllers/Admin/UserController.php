@@ -6,45 +6,38 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use App\Services\WhatsappService;
 
 class UserController extends Controller
 {
     public function resetPassword(Request $request, User $user)
     {
-        // ✅ VALIDASI
+        // ✅ Validasi password admin
         $request->validate([
             'admin_password' => 'required',
         ]);
 
-        // ✅ CEK PASSWORD ADMIN
+        // ✅ Cek password admin
         if (!Hash::check($request->admin_password, auth()->user()->password)) {
             return back()->with('error', 'Password admin salah.');
         }
 
-        // 🔐 Generate password baru
-        $newPassword = Str::random(8);
+        // ✅ Pastikan target adalah warga
+        if ($user->role !== 'warga') {
+            abort(403, 'Target bukan warga');
+        }
 
-        // 🔒 Simpan ke DB
+        // 🔐 Password default
+        $defaultPassword = '123456';
+
+        // 🔒 Update password warga
         $user->update([
-            'password' => Hash::make($newPassword),
-            'force_password_change' => 1,
+            'password' => Hash::make($defaultPassword),
+            'force_password_change' => 1, // wajib ganti saat login
         ]);
-
-        // 📲 KIRIM KE WA WARGA
-        WhatsappService::send(
-        $user->no_hp,
-        "🔐 *RESET PASSWORD AKUN RT/RW*\n\n"
-        ."Nama: {$user->name}\n"
-        ."Password sementara: *{$newPassword}*\n\n"
-        ."Silakan login, Anda akan diminta mengganti password."
-    );
 
         return back()->with(
             'success',
-            'Password berhasil direset dan dikirim ke WhatsApp warga.'
+            'Password warga berhasil direset menjadi 123456.'
         );
     }
 }
-

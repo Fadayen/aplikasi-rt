@@ -13,10 +13,9 @@ class MasterTagihan extends Model
 
     protected $fillable = [
         'nama_tagihan',
-        'nominal',
-        'tipe',        // bulanan / tahunan / sekali
-        'keterangan',
-        'aktif'
+        'nominal_biasa',
+        'nominal_vip',
+        'aktif',
     ];
 
     public function tagihans()

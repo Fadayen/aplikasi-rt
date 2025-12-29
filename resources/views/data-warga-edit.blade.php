@@ -67,17 +67,18 @@
     <label class="form-label fw-semibold">Kategori Rumah</label>
     <select name="jenis_tagihan" class="form-control" required>
         <option value="">-- Pilih Kategori --</option>
-        <option value="biasa" {{ $warga->jenis_tagihan == 'biasa' ? 'selected' : '' }}>
-            Biasa (Rp 50.000)
+
+        <option value="biasa"
+            {{ $warga->jenis_tagihan == 'biasa' ? 'selected' : '' }}>
+            Biasa (Rp {{ number_format($kasBulanan->nominal_biasa, 0, ',', '.') }})
         </option>
-        <option value="vip" {{ $warga->jenis_tagihan == 'vip' ? 'selected' : '' }}>
-            VIP (Rp 100.000)
+
+        <option value="vip"
+            {{ $warga->jenis_tagihan == 'vip' ? 'selected' : '' }}>
+            VIP (Rp {{ number_format($kasBulanan->nominal_vip, 0, ',', '.') }})
         </option>
     </select>
 </div>
-
-
-
 
             </div>
 

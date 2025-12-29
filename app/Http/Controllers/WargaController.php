@@ -15,15 +15,20 @@ class WargaController extends Controller
         $warga = User::where('approved', 1)
             ->where('role', 'warga')
             ->when($search, function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                  ->orWhere('nik', 'like', "%$search%")
-                  ->orWhere('no_kk', 'like', "%$search%");
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('nik', 'like', "%{$search}%")
+                  ->orWhere('no_kk', 'like', "%{$search}%");
             })
             ->get();
 
-        $masters = MasterTagihan::all();
+        // ✅ MASTER TAGIHAN KAS BULANAN
+        $kasBulanan = MasterTagihan::where('nama_tagihan', 'Kas Bulanan')->first();
 
-        return view('data-warga', compact('warga', 'masters', 'search'));
+        return view('data-warga', compact(
+            'warga',
+            'search',
+            'kasBulanan'
+        ));
     }
 
     public function detail($id)
@@ -35,7 +40,11 @@ class WargaController extends Controller
     public function edit($id)
     {
         $warga = User::findOrFail($id);
-        return view('data-warga-edit', compact('warga'));
+
+        // ✅ kirim master tagihan ke form edit
+        $kasBulanan = MasterTagihan::where('nama_tagihan', 'Kas Bulanan')->first();
+
+        return view('data-warga-edit', compact('warga', 'kasBulanan'));
     }
 
     public function update(Request $request, $id)
@@ -69,6 +78,7 @@ class WargaController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
+
         return redirect('/data-warga')
             ->with('success', 'Data warga berhasil dihapus');
     }

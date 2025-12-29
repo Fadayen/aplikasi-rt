@@ -15,7 +15,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ChangePasswordController;
-
+use App\Http\Controllers\MasterTagihanController;
 
 
 Route::middleware('web')->group(function () {
@@ -155,6 +155,11 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
 
             Route::delete('/admin/users/{id}/decline', [DashboardControllerAdmin::class, 'decline'])
                 ->name('admin.users.decline');
+
+            Route::post('/setting-tagihan/update', [MasterTagihanController::class, 'update'])
+    ->name('setting-tagihan.update')
+    ->middleware(['auth', 'admin']);
+
 
             /*
             |--------------------------------------------------------------------------

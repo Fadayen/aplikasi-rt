@@ -87,7 +87,7 @@
     </div>
 </div>
 
-{{-- ✅ MODAL RESET PASSWORD --}}
+{{-- MODAL RESET PASSWORD --}}
 @if(
     auth()->check() &&
     auth()->user()->role === 'admin' &&

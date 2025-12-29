@@ -392,10 +392,17 @@
 
 <tr>
     {{-- WARGA --}}
-    <td>
+<td>
+    @if($t->user)
         <strong>{{ $t->user->name }}</strong><br>
         <small class="text-muted">{{ $t->user->email }}</small>
-    </td>
+    @else
+        <span class="text-danger fst-italic">
+            User tidak ditemukan
+        </span>
+    @endif
+</td>
+
 
     {{-- TAGIHAN --}}
     <td>
