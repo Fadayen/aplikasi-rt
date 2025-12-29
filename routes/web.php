@@ -143,12 +143,6 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
         */
         Route::middleware('admin')->group(function () {
 
-            // 🔐 RESET PASSWORD WARGA (ADMIN ONLY)
-    Route::post(
-        '/admin/reset-password/{user}',
-        [\App\Http\Controllers\Admin\UserController::class, 'resetPassword']
-    )->name('admin.reset-password');
-
             // APPROVE USER
             Route::post('/admin/users/{id}/approve', [DashboardControllerAdmin::class, 'approve'])
                 ->name('admin.users.approve');
@@ -156,22 +150,28 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
             Route::delete('/admin/users/{id}/decline', [DashboardControllerAdmin::class, 'decline'])
                 ->name('admin.users.decline');
 
-            Route::post('/setting-tagihan/update', [MasterTagihanController::class, 'update'])
-    ->name('setting-tagihan.update')
-    ->middleware(['auth', 'admin']);
-
-
             /*
-            |--------------------------------------------------------------------------
-            | DATA WARGA — ADMIN CRUD
-            |--------------------------------------------------------------------------
-            */
+|--------------------------------------------------------------------------
+| DATA WARGA — ADMIN CRUD
+|--------------------------------------------------------------------------
+*/
 
-            Route::middleware('admin')->group(function () {
-                Route::get('/data-warga/{id}/edit', [WargaController::class, 'edit']);
-                Route::put('/data-warga/{id}', [WargaController::class, 'update']);
-                Route::delete('/data-warga/{id}', [WargaController::class, 'destroy']);
-            });
+Route::middleware('admin')->group(function () {
+
+    Route::get('/data-warga/{id}/edit', [WargaController::class, 'edit']);
+    Route::put('/data-warga/{id}', [WargaController::class, 'update']);
+    Route::delete('/data-warga/{id}', [WargaController::class, 'destroy']);
+
+    Route::post(
+        '/admin/reset-password/{user}',
+        [\App\Http\Controllers\Admin\UserController::class, 'resetPassword']
+    )->name('admin.reset-password');
+
+    Route::post('/setting-tagihan/update', [MasterTagihanController::class, 'update'])
+        ->name('setting-tagihan.update');
+
+});
+
 
             /*
             |--------------------------------------------------------------------------
