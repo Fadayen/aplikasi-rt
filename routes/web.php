@@ -37,6 +37,17 @@ Route::middleware('web')->group(function () {
     
     Route::get('/berita-detik', [DetikNewsController::class, 'index']);
 
+
+    Route::post('/admin/reset-password/{user}', [UserController::class, 'resetPassword'])
+    ->middleware(['auth', 'admin'])
+    ->name('admin.reset-password');
+
+        
+        // ✅ ROUTE YANG DIPAKAI DI BLADE
+       Route::post('/setting-tagihan/update', [MasterTagihanController::class, 'update'])
+    ->middleware(['auth', 'admin'])
+    ->name('setting-tagihan.update');
+
     /*
     |--------------------------------------------------------------------------
     | AUTH
@@ -112,6 +123,8 @@ Route::prefix('inventaris')->group(function () {
     Route::get('/detail/{id}', [InventarisController::class, 'show'])->name('inventaris.show');
 });
 
+
+
         // Tagihan (read only)
         Route::middleware(['auth'])->group(function () {
 
@@ -132,6 +145,7 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
     Route::post('/change-password', [ChangePasswordController::class, 'update'])
         ->name('password.change.submit');
 
+        
 
 });
 
@@ -159,12 +173,6 @@ Route::middleware('admin')->group(function () {
     Route::put('/data-warga/{id}', [WargaController::class, 'update']);
     Route::delete('/data-warga/{id}', [WargaController::class, 'destroy']);
 
-    Route::post('/admin/reset-password/{user}', [UserController::class, 'resetPassword'])
-        ->name('admin.reset-password');
-
-    // ✅ ROUTE YANG DIPAKAI DI BLADE
-    Route::post('/setting-tagihan/update', [MasterTagihanController::class, 'update'])
-        ->name('setting-tagihan.update');
 
     // ===============================
     // SURAT — ADMIN CRUD

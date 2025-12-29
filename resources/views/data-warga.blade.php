@@ -218,34 +218,43 @@
             Setting Nominal Kas Bulanan
         </h6>
 
-        <form action="{{ route('setting-tagihan.update') }}" method="POST" class="row g-3">
-            @csrf
-            <input type="hidden" name="id" value="{{ $kasBulanan->id }}">
+        @auth
+@if(
+    auth()->user()->role === 'admin' &&
+    isset($kasBulanan) &&
+    Route::has('setting-tagihan.update')
+)
+<form action="{{ route('setting-tagihan.update') }}" method="POST" class="row g-3">
+    @csrf
 
-            <div class="col-md-4">
-                <label class="form-label">Nominal Biasa</label>
-                <input type="number"
-                       name="nominal_biasa"
-                       class="form-control rounded-pill"
-                       value="{{ $kasBulanan->nominal_biasa }}"
-                       required>
-            </div>
+    <input type="hidden" name="id" value="{{ $kasBulanan->id }}">
 
-            <div class="col-md-4">
-                <label class="form-label">Nominal VIP</label>
-                <input type="number"
-                       name="nominal_vip"
-                       class="form-control rounded-pill"
-                       value="{{ $kasBulanan->nominal_vip }}"
-                       required>
-            </div>
+    <div class="col-md-4">
+        <label class="form-label">Nominal Biasa</label>
+        <input type="number"
+               name="nominal_biasa"
+               class="form-control rounded-pill"
+               value="{{ $kasBulanan->nominal_biasa }}"
+               required>
+    </div>
 
-            <div class="col-md-4 d-grid align-items-end">
-                <button class="btn btn-primary rounded-pill fw-semibold">
-                    Simpan Perubahan
-                </button>
-            </div>
-        </form>
+    <div class="col-md-4">
+        <label class="form-label">Nominal VIP</label>
+        <input type="number"
+               name="nominal_vip"
+               class="form-control rounded-pill"
+               value="{{ $kasBulanan->nominal_vip }}"
+               required>
+    </div>
+
+    <div class="col-md-4 d-grid align-items-end">
+        <button type="submit" class="btn btn-primary rounded-pill fw-semibold">
+            Simpan Perubahan
+        </button>
+    </div>
+</form>
+@endif
+@endauth
 
         <div class="alert alert-info mt-3 small mb-0">
             ℹ️ Perubahan nominal langsung berlaku untuk seluruh tagihan & warga.
