@@ -149,7 +149,7 @@ Terima kasih 🙏";
 
     return back()->with(
         'success',
-        'Tagihan berhasil dikirim. Notifikasi WA diproses di background.'
+        'Tagihan berhasil dikirim.'
     );
 }
 
