@@ -137,131 +137,108 @@ Route::post('/payment/{id}', [PaymentController::class, 'upload'])
 
 
         /*
-        |--------------------------------------------------------------------------
-        | ADMIN — CRUD AREA
-        |--------------------------------------------------------------------------
-        */
-        Route::middleware('admin')->group(function () {
-
-            // APPROVE USER
-            Route::post('/admin/users/{id}/approve', [DashboardControllerAdmin::class, 'approve'])
-                ->name('admin.users.approve');
-
-            Route::delete('/admin/users/{id}/decline', [DashboardControllerAdmin::class, 'decline'])
-                ->name('admin.users.decline');
-
-            /*
 |--------------------------------------------------------------------------
-| DATA WARGA — ADMIN CRUD
+| ADMIN — CRUD AREA
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('admin')->group(function () {
 
+    // ===============================
+    // APPROVE USER
+    // ===============================
+    Route::post('/admin/users/{id}/approve', [DashboardControllerAdmin::class, 'approve'])
+        ->name('admin.users.approve');
+
+    Route::delete('/admin/users/{id}/decline', [DashboardControllerAdmin::class, 'decline'])
+        ->name('admin.users.decline');
+
+    // ===============================
+    // DATA WARGA — ADMIN CRUD
+    // ===============================
     Route::get('/data-warga/{id}/edit', [WargaController::class, 'edit']);
     Route::put('/data-warga/{id}', [WargaController::class, 'update']);
     Route::delete('/data-warga/{id}', [WargaController::class, 'destroy']);
 
-    Route::post(
-        '/admin/reset-password/{user}',
-        [\App\Http\Controllers\Admin\UserController::class, 'resetPassword']
-    )->name('admin.reset-password');
+    Route::post('/admin/reset-password/{user}', [UserController::class, 'resetPassword'])
+        ->name('admin.reset-password');
 
+    // ✅ ROUTE YANG DIPAKAI DI BLADE
     Route::post('/setting-tagihan/update', [MasterTagihanController::class, 'update'])
         ->name('setting-tagihan.update');
 
-});
+    // ===============================
+    // SURAT — ADMIN CRUD
+    // ===============================
+    Route::prefix('surat')->group(function () {
+        Route::get('/{id}/validasi', [SuratController::class, 'validasi']);
+        Route::post('/upload/{id}', [SuratController::class, 'uploadFile'])->name('surat.upload');
+        Route::delete('/{id}', [SuratController::class, 'destroy'])->name('surat.destroy');
+        Route::get('/{id}/edit', [SuratController::class, 'edit'])->name('surat.edit');
+    });
 
+    // ===============================
+    // AGENDA — CRUD
+    // ===============================
+    Route::prefix('agenda')->group(function () {
+        Route::get('/create', [AgendaController::class, 'create'])->name('agenda.create');
+        Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
+        Route::get('/{id}/edit', [AgendaController::class, 'edit'])->name('agenda.edit');
+        Route::post('/{id}/update', [AgendaController::class, 'update'])->name('agenda.update');
+        Route::delete('/delete/{id}', [AgendaController::class, 'destroy'])->name('agenda.delete');
+    });
 
-            /*
-            |--------------------------------------------------------------------------
-            | SURAT — ADMIN CRUD
-            |--------------------------------------------------------------------------
-            */
-            Route::prefix('surat')->group(function () {
-                Route::get('/{id}/validasi', [SuratController::class, 'validasi']);
-            });
-                Route::post('/surat/upload/{id}', [SuratController::class, 'uploadFile'])->name('surat.upload');
-                Route::delete('/surat/{id}', [SuratController::class, 'destroy'])->name('surat.destroy');
-                Route::get('/surat/{id}/edit', [SuratController::class, 'edit'])->name('surat.edit');
-            /*
-            |--------------------------------------------------------------------------
-            | AGENDA — CRUD
-            |--------------------------------------------------------------------------
-            */
-            Route::prefix('agenda')->group(function () {
-                Route::get('/create', [AgendaController::class, 'create'])->name('agenda.create');
-                Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
-                Route::get('/{id}/edit', [AgendaController::class, 'edit'])->name('agenda.edit');
-                Route::post('/{id}/update', [AgendaController::class, 'update'])->name('agenda.update');
-                Route::delete('/delete/{id}', [AgendaController::class, 'destroy'])->name('agenda.delete');
-            });
+    // ===============================
+    // BERITA — CRUD
+    // ===============================
+    Route::prefix('admin/berita')->group(function () {
+        Route::get('/{id}/edit', [BeritaController::class, 'edit'])->name('berita.edit');
+        Route::put('/{id}', [BeritaController::class, 'update'])->name('berita.update');
+        Route::delete('/{id}', [BeritaController::class, 'destroy'])->name('berita.destroy');
+    });
 
+    // ===============================
+    // KEUANGAN — CRUD
+    // ===============================
+    Route::prefix('keuangan')->group(function () {
+        Route::get('/create', [KeuanganController::class, 'create']);
+        Route::post('/store', [KeuanganController::class, 'store']);
+        Route::get('/{id}/edit', [KeuanganController::class, 'edit']);
+        Route::post('/{id}/update', [KeuanganController::class, 'update']);
+        Route::delete('/delete/{id}', [KeuanganController::class, 'destroy']);
+    });
 
-            /*
-            |--------------------------------------------------------------------------
-            | BERITA — CRUD
-            |--------------------------------------------------------------------------
-            */
-            Route::prefix('admin/berita')->middleware('admin')->group(function () {
-            Route::get('/{id}/edit', [BeritaController::class, 'edit'])->name('berita.edit');
-            Route::put('/{id}', [BeritaController::class, 'update'])->name('berita.update');
-            Route::delete('/{id}', [BeritaController::class, 'destroy'])->name('berita.destroy');
-});
+    // ===============================
+    // INVENTARIS — CRUD
+    // ===============================
+    Route::prefix('inventaris')->group(function () {
+        Route::get('/create', [InventarisController::class, 'create'])->name('inventaris.create');
+        Route::post('/store', [InventarisController::class, 'store'])->name('inventaris.store');
+        Route::get('/{id}/edit', [InventarisController::class, 'edit'])->name('inventaris.edit');
+        Route::put('/{id}', [InventarisController::class, 'update'])->name('inventaris.update');
+        Route::delete('/delete/{id}', [InventarisController::class, 'destroy'])->name('inventaris.destroy');
+    });
 
+    // ===============================
+    // TAGIHAN — CRUD
+    // ===============================
+    Route::prefix('tagihan')->group(function () {
+        Route::get('/admin/payment', [PaymentController::class, 'admin'])->name('payment.admin');
+        Route::get('/create/{user_id}', [TagihanController::class, 'create'])->name('tagihan.create');
+        Route::post('/store', [TagihanController::class, 'store'])->name('tagihan.store');
+        Route::post('/admin/payment/verify/{id}', [DashboardControllerAdmin::class, 'verify'])
+            ->name('payment.verify');
+        Route::post('/admin/payment/reject/{id}', [DashboardControllerAdmin::class, 'reject'])
+            ->name('payment.reject');
+        Route::delete('/{id}', [TagihanController::class, 'destroy'])
+            ->name('tagihan.destroy');
+        Route::post('/kirim-massal', [TagihanController::class, 'kirimMassal'])
+            ->name('tagihan.massal');
+        Route::post('/kirim-perwarga', [TagihanController::class, 'kirimPerWarga'])
+            ->name('tagihan.kirim.perwarga');
+    });
 
+}); // ✅ END ADMIN
 
-            /*
-            |--------------------------------------------------------------------------
-            | KEUANGAN — CRUD
-            |--------------------------------------------------------------------------
-            */
-            Route::prefix('keuangan')->group(function () {
-                Route::get('/create', [KeuanganController::class, 'create']);
-                Route::post('/store', [KeuanganController::class, 'store']);
-                Route::get('/{id}/edit', [KeuanganController::class, 'edit']);
-                Route::post('/{id}/update', [KeuanganController::class, 'update']);
-                Route::delete('/delete/{id}', [KeuanganController::class, 'destroy']);
-            });
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | INVENTARIS — CRUD
-            |--------------------------------------------------------------------------
-            */
-            Route::middleware('admin')->prefix('inventaris')->group(function () {
-    Route::get('/create', [InventarisController::class, 'create'])->name('inventaris.create');
-    Route::post('/store', [InventarisController::class, 'store'])->name('inventaris.store');
-    Route::get('/{id}/edit', [InventarisController::class, 'edit'])->name('inventaris.edit');
-    Route::put('/{id}', [InventarisController::class, 'update'])->name('inventaris.update');
-    Route::delete('/delete/{id}', [InventarisController::class, 'destroy'])->name('inventaris.destroy');
-});
-
-            /*
-            |--------------------------------------------------------------------------
-            | TAGIHAN — CRUD
-            |--------------------------------------------------------------------------
-            */
-            Route::prefix('tagihan')->group(function () {
-
-            Route::get('/admin/payment', [PaymentController::class, 'admin'])->name('payment.admin');
-            Route::get('/create/{user_id}', [TagihanController::class, 'create'])->name('tagihan.create');
-            Route::post('/store', [TagihanController::class, 'store'])->name('tagihan.store');
-            Route::post('/admin/payment/verify/{id}', [DashboardControllerAdmin::class, 'verify'])
-    ->name('payment.verify');
-Route::post('/admin/payment/reject/{id}', [DashboardControllerAdmin::class, 'reject'])
-    ->name('payment.reject');
-    Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])
-    ->name('tagihan.destroy');
-                Route::post('/kirim-massal', [TagihanController::class, 'kirimMassal'])
-    ->name('tagihan.massal');
-Route::post('/kirim-perwarga', [TagihanController::class, 'kirimPerWarga'])
-        ->name('tagihan.kirim.perwarga');
-
-});
-
-        }); // END ADMIN
 
     }); // END AUTH + APPROVED
 

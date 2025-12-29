@@ -54,12 +54,12 @@
         <option value="dipinjam" {{ $item->kondisi == 'dipinjam' ? 'selected' : '' }}>Dipinjam</option>
     </select>
 </div>
-<div class="mb-3" id="keteranganPinjam"
-     style="{{ $item->kondisi == 'dipinjam' ? '' : 'display:none;' }}">
+<div class="mb-3">
     <label>Keterangan</label>
     <textarea name="keterangan" class="form-control"
-        placeholder="Dipinjam oleh siapa, tanggal pinjam, dll">{{ $item->keterangan }}</textarea>
+        placeholder="Keterangan tambahan">{{ $item->keterangan }}</textarea>
 </div>
+
 
 
                 <button class="btn btn-primary">Simpan Perubahan</button>
